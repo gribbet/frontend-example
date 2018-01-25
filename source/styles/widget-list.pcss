@@ -4,11 +4,12 @@
         @mixin grid;
 
         & h2 {
-            @mixin cell 10
+            @mixin cell 9;
         }
 
-        & .new {
-            @mixin cell 2
+        & .buttons {
+            @mixin cell 3;
+            text-align: right;
         }
     }
 
@@ -29,8 +30,14 @@
             @mixin cell 7;
         }
 
-        & .edit, & .delete{
-            @mixin cell 2;
+        & .buttons {
+            @mixin cell 4;
+            text-align: right;
+            white-space: nowrap;
+
+            & button {
+                margin-left: var(--spacing);
+            }
         }
 
         &.selected {
