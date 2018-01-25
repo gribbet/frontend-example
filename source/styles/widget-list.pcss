@@ -1,0 +1,40 @@
+.widget-list {
+
+    & .title {
+        @mixin grid;
+
+        & h2 {
+            @mixin cell 10
+        }
+
+        & .new {
+            @mixin cell 2
+        }
+    }
+
+    & .header {
+        @mixin control-text;
+    }
+
+    & .widget {
+        @mixin grid;
+        transition: all 200ms;
+
+        & .id {
+            @mixin cell 1;
+            text-align: right;
+        }
+
+        & .name {
+            @mixin cell 7;
+        }
+
+        & .edit, & .delete{
+            @mixin cell 2;
+        }
+
+        &.selected {
+            color: #f66;
+        }
+    }
+}

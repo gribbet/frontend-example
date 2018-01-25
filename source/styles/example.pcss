@@ -1,0 +1,17 @@
+@import "base.pcss";
+@import "common.pcss";
+@import "widget-edit.pcss";
+@import "widget-list.pcss";
+@import "not-found.pcss";
+
+.application {
+    font-family: var(--font);
+    
+    & header {
+        @mixin grid;
+
+        & h1 {
+            @mixin cell 12;
+        }
+    }
+}

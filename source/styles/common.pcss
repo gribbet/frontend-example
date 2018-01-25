@@ -1,0 +1,41 @@
+:root {
+    --spacing: 20px;
+    --font: monospace;
+
+    @define-mixin grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-gap: var(--spacing);
+        align-items: center;
+        margin: var(--spacing);
+
+        @define-mixin cell $columns, $offset: auto {
+            grid-column: $offset / span $columns;
+            overflow: hidden;
+            padding: calc(var(--spacing)/2);
+        }
+    }
+
+    @define-mixin control-text {
+        font-family: var(--font);
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+    }
+
+    & button {
+        @mixin control-text;
+        border: none;
+        color: black;
+        background-color: #ccc;
+        padding: 10px;
+        cursor: pointer;
+        transition: all 200ms;
+
+        &:hover {
+            color: white;
+            background: #666;
+        }
+    }
+}

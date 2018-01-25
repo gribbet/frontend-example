@@ -1,0 +1,50 @@
+.widget-edit {
+
+    & .title {
+        @mixin grid;
+
+        & h2 {
+            @mixin cell 12;
+        }
+    }
+
+    & form {
+        
+        @define-mixin field {
+            @mixin grid;
+
+            & label {
+                @mixin cell 2;
+                @mixin control-text;
+                text-align: right;
+            }
+
+            & input {
+                @mixin cell 8;
+                font-family: var(--font);
+                font-size: 1rem;
+                border: none;
+            }
+        }
+
+        & .id {
+            @mixin field;
+
+            &:empty {
+                display: none;
+            }
+        }
+
+        & .name {
+            @mixin field;
+        }
+
+        & .buttons {
+            @mixin grid;
+
+            & button {
+                @mixin cell 2, 3;
+            }
+        }
+    }
+}

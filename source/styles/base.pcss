@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    font-size: 16px;
+    background: #f6f6f6;
+
+    &:after {
+        display: block;
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: black;
+        transition: all 200ms;
+        opacity: 0;        
+    }
+
+    &.loading:after {
+        opacity: 1;
+    }
+}
+
+h1, h2 {
+    margin: 0;
+}
