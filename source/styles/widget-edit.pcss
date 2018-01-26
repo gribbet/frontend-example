@@ -4,12 +4,17 @@
         @mixin grid;
 
         & h2 {
-            @mixin cell 12;
+            @mixin cell 9;
+        }
+
+        & .buttons {
+            @mixin cell 3;
+            text-align: right;
         }
     }
 
     & form {
-        
+
         @define-mixin field {
             @mixin grid;
 
@@ -24,6 +29,7 @@
                 font-family: var(--font);
                 font-size: 1rem;
                 border: none;
+                padding: 8px 10px;
             }
         }
 
@@ -37,14 +43,6 @@
 
         & .name {
             @mixin field;
-        }
-
-        & .buttons {
-            @mixin grid;
-
-            & button {
-                @mixin cell 2, 3;
-            }
         }
     }
 }
