@@ -2,7 +2,11 @@ import Component from "wedges/lib/Component";
 
 export class Focuser extends Component {
     render(element: Element) {
-        (<HTMLInputElement>element).focus();
-        return super.render(element);
+        const input = <HTMLInputElement>element;
+        return {
+            update: () =>
+                input.select(),
+            destroy: () => undefined
+        };
     }
 }

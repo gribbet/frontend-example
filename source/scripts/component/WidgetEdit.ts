@@ -38,10 +38,10 @@ export default class WidgetEdit extends Container {
                         ])),
                     new Selector(".name input",
                         new Container([
-                            new Focuser(),
                             new InputHandler(
                                 () => widget.name,
-                                name => widget.name = name)
+                                name => widget.name = name),
+                            new Focuser()
                         ]))
                 ]))
         ])
