@@ -26,21 +26,23 @@
 
         & .id {
             @mixin cell 1;
-            text-align: right;
+            padding-bottom: 5px;
+        }
+
+        & .updated {
+            @mixin cell 3;
+            padding-bottom: 5px;
         }
 
         & .name {
-            @mixin cell 7;
+            @mixin cell 4;
+            padding-bottom: 5px;
         }
 
         & .buttons {
             @mixin cell 4;
             text-align: right;
             white-space: nowrap;
-
-            & button {
-                margin-left: var(--spacing);
-            }
         }
 
         &.selected {

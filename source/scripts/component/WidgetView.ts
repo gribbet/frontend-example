@@ -24,6 +24,7 @@ export default class WidgetView extends Container {
                     selected = !selected)),
             new ClassToggler("selected", () => selected),
             new Selector(".id", new Label(() => (widget.id || 0).toString())),
+            new Selector(".updated", new Label(() => widget.updated.toLocaleTimeString())),
             new Selector(".name", new Label(() => widget.name)),
             new Selector(".edit", new ClickHandler(() =>
                 events.onEdit())),
