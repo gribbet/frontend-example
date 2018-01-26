@@ -48,4 +48,26 @@
         @mixin cell 12;
         @mixin grid;
     }
+
+    & > .pagination {
+        @mixin cell 12;
+        text-align: center;
+
+        & > .more {
+            color: #ddd;
+
+            &.hidden {
+                color: transparent;
+            }
+        }
+
+        & > .pages {
+
+            & .selected {
+                cursor: normal;
+                pointer-events: none;
+                color: black;
+            }
+        }
+    }
 }

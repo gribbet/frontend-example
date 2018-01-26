@@ -6,11 +6,13 @@ import Template from "wedges/lib/component/Template";
 
 import { application, widgetService } from "..";
 import Widget, { WidgetId } from "./../model/Widget";
+import Pagination from "./Pagination";
 import WidgetIdView from "./WidgetIdView";
 
 declare var require: (path: string) => string;
 
 export default class WidgetList extends Container {
+    private current = 0;
 
     constructor(
         events: {
@@ -33,7 +35,16 @@ export default class WidgetList extends Container {
                         onDelete: () =>
                             application.update(() =>
                                 this.reset())
-                    })))
+                    }))),
+            new Selector(".pagination",
+                new Pagination(
+                    () => this.current,
+                    () => 6,
+                    page => {
+                        console.log(page);
+                        this.current = page;
+                        application.update();
+                    }))
         ]);
     }
 
