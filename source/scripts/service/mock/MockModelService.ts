@@ -27,19 +27,32 @@ export default abstract class MockModelService<Id, Model_
         return model;
     }
 
-    async list() {
+    async list(count?: number, offset?: number) {
         console.log("List");
         await this.request();
 
-        return this.models.slice();
+        const start = offset || 0;
+        const end = count ? start + count : undefined;
+
+        return this.models.slice(start, end);
     }
 
-    async listIds() {
+    async listIds(count?: number, offset?: number) {
         console.log("ListIds");
         await this.request();
 
-        return this.models
+        const start = offset || 0;
+        const end = count ? start + count : undefined;
+
+        return this.models.slice(start, end)
             .map(_ => _.id || this.newId());
+    }
+
+    async count() {
+        console.log("Count");
+        await this.request();
+
+        return this.models.length;
     }
 
     async find(id: Id): Promise<Model_ | null> {

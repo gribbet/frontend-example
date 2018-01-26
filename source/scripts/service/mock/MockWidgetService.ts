@@ -8,18 +8,16 @@ export default class MockWidgetService
     constructor() {
         super();
 
-        const names = new Array(4)
+        const names = new Array(10)
             .fill(0)
             .map((_, i) =>
                 Math.random().toString(36).substring(2, 15))
 
-        names.forEach(name =>
-            this.save({
-                id: null,
-                name: name,
-                created: new Date(),
-                updated: new Date()
-            }));
+        names.forEach(name => {
+            const widget = new Widget();
+            widget.name = name;
+            this.save(widget);
+        });
     }
 
     newId(): WidgetId {
