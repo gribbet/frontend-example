@@ -75,7 +75,7 @@ export default abstract class MockModelService<Id, Model_
 
     async request() {
         loadingIndicator.show();
-        await delay(100);
+        await delay(25);
         loadingIndicator.hide();
     }
 }
