@@ -7,7 +7,6 @@
         grid-template-columns: repeat(12, 1fr);
         grid-gap: var(--spacing);
         align-items: center;
-        margin: var(--spacing);
 
         @define-mixin cell $columns, $offset: auto {
             grid-column: $offset / span $columns;
@@ -26,13 +25,14 @@
         @mixin control-text;
         border: none;
         background-color: transparent;
-        color: black;
+        color: #00c;
         padding: 0.5rem 1rem;
         cursor: pointer;
         transition: all 200ms;
 
         &:hover {
-            background: #ccc;
+            background: #666;
+            color: white;
         }
     }
 }

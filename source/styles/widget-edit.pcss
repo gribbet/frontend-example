@@ -1,21 +1,21 @@
 .widget-edit {
+    @mixin grid;
 
-    & .title {
+    & > form {
+        @mixin cell 12;
         @mixin grid;
-
-        & h2 {
+        
+        & > h2 {
             @mixin cell 9;
         }
 
-        & .buttons {
+        & > .buttons {
             @mixin cell 3;
             text-align: right;
         }
-    }
-
-    & form {
 
         @define-mixin field {
+            @mixin cell 12;
             @mixin grid;
 
             & label {

@@ -1,27 +1,23 @@
 .widget-list {
+    @mixin grid;
 
-    & .title {
-        @mixin grid;
+    & > h2 {
+        @mixin cell 9;
+    }
 
-        & h2 {
-            @mixin cell 9;
-        }
-
-        & .buttons {
-            @mixin cell 3;
-            text-align: right;
-        }
+    & > .buttons {
+        @mixin cell 3;
+        text-align: right;
     }
 
     & .widget {
+        @mixin cell 12;
         @mixin grid;
-        align-items: baseline;
+        border-bottom: 1px solid #ccc;
         transition: all 200ms;
-        border-top: 1px solid #ccc;
 
         &.header {
             @mixin control-text;
-            border: none;
         }
 
         & .id {
@@ -30,6 +26,7 @@
 
         & .updated {
             @mixin cell 3;
+            white-space: nowrap;
         }
 
         & .name {
@@ -43,7 +40,12 @@
         }
 
         &.selected {
-            color: #f66;
+            color: #c00;
         }
+    }
+
+    & > .widgets {
+        @mixin cell 12;
+        @mixin grid;
     }
 }

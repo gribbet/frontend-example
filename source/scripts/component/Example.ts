@@ -21,7 +21,7 @@ export default class Example extends Container {
         super([
             new Template(require("../../templates/example.pug")),
             new Styler(require("../../styles/example.pcss")),
-            new Selector(".container",
+            new Selector(".application",
                 new Updater(() => this.active)),
         ]);
     }
