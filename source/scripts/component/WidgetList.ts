@@ -37,10 +37,11 @@ export default class WidgetList extends Container {
                 new Pagination(
                     () => this.page,
                     () => Math.ceil((this.count || 0) / perPage),
-                    page => {
-                        this.page = page;
-                        application.update(() => this.reset());
-                    }))
+                    page =>
+                        application.update(() => {
+                            this.page = page;
+                            this.reset();
+                        })))
         ]);
     }
 
