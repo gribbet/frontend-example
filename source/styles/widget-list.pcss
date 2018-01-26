@@ -13,30 +13,29 @@
         }
     }
 
-    & .header {
-        @mixin control-text;
-        padding-bottom: 5px;
-    }
+    
 
     & .widget {
         @mixin grid;
         align-items: baseline;
         transition: all 200ms;
-        border-bottom: 1px solid #ccc;
+        border-top: 1px solid #ccc;
+
+        &.header {
+            @mixin control-text;
+            border: none;
+        }
 
         & .id {
             @mixin cell 1;
-            padding-bottom: 5px;
         }
 
         & .updated {
             @mixin cell 3;
-            padding-bottom: 5px;
         }
 
         & .name {
             @mixin cell 4;
-            padding-bottom: 5px;
         }
 
         & .buttons {
