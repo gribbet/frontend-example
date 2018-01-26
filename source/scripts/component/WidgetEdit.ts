@@ -7,6 +7,7 @@ import Template from "wedges/lib/component/Template";
 
 import { widgetService } from "..";
 import Widget from "../model/Widget";
+import { Focuser } from "./Focuser";
 
 declare var require: (path: string) => string;
 
@@ -36,9 +37,12 @@ export default class WidgetEdit extends Container {
                                     _ => undefined))
                         ])),
                     new Selector(".name input",
-                        new InputHandler(
-                            () => widget.name,
-                            name => widget.name = name))
+                        new Container([
+                            new Focuser(),
+                            new InputHandler(
+                                () => widget.name,
+                                name => widget.name = name)
+                        ]))
                 ]))
         ])
     }
