@@ -1,13 +1,13 @@
 import AttributeSetter from "wedges/lib/component/AttributeSetter";
+import ClassToggler from "wedges/lib/component/ClassToggler";
 import ClickHandler from "wedges/lib/component/ClickHandler";
 import Container from "wedges/lib/component/Container";
 import KeyedRepeater from "wedges/lib/component/KeyedRepeater";
+import Label from "wedges/lib/component/Label";
 import Remover from "wedges/lib/component/Remover";
 import Selector from "wedges/lib/component/Selector";
 import Template from "wedges/lib/component/Template";
 
-import ClassToggler from "../../../../wedges/lib/component/ClassToggler";
-import Label from "../../../../wedges/lib/component/Label";
 import { range } from "../common";
 
 declare var require: (path: string) => string;
