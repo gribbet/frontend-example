@@ -21,8 +21,9 @@ export default abstract class MockModelService<Id, Model_
 
         const index = this.models.findIndex(_ => _.id === model.id);
         if (index !== -1)
-            this.models.splice(index, 1);
-        this.models.push(model);
+            this.models.splice(index, 1, model);
+        else
+            this.models.push(model);
 
         return model;
     }
