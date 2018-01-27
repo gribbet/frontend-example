@@ -53,7 +53,7 @@ export default class WidgetList extends Container {
         this.count = this.count
             || await widgetService.count();
         if (this.page * perPage >= this.count)
-            this.page = 0;
+            this.page = Math.floor((this.count - 1) / perPage);
         this.widgetIds = this.widgetIds
             || await widgetService.listIds(perPage, this.page * perPage);
         await super.load();
