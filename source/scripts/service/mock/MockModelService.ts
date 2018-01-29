@@ -1,26 +1,26 @@
 import { delay } from "../../common";
 import { loadingIndicator } from "../../loading-indicator";
-import Model, { ModelSort, updatedSort } from "../../model/Model";
+import Model_, { ModelSort, updatedSort } from "../../model/Model";
 import ModelService, { SortOptions } from "../ModelService";
 
 export default abstract class MockModelService<
     Id,
-    Model_ extends Model<Id>,
+    Model extends Model_<Id>,
     Sort extends ModelSort = ModelSort>
-    implements ModelService<Id, Model_, Sort> {
+    implements ModelService<Id, Model, Sort> {
 
-    protected models: Model_[] = [];
+    protected models: Model[] = [];
 
     protected abstract newId(): Id;
 
-    protected comparator(sort: Sort): (a: Model_, b: Model_) => number {
+    protected comparator(sort: Sort): (a: Model, b: Model) => number {
         if (sort === updatedSort)
-            return (a: Model_, b: Model_) => a.updated.getTime() - b.updated.getTime();
-        return (a: Model_, b: Model_) =>
+            return (a: Model, b: Model) => a.updated.getTime() - b.updated.getTime();
+        return (a: Model, b: Model) =>
             (a.id || "").toString().localeCompare((b.id || "").toString())
     }
 
-    async save(model: Model_): Promise<Model_> {
+    async save(model: Model): Promise<Model> {
         console.log("Save");
         await this.request();
 
@@ -64,7 +64,7 @@ export default abstract class MockModelService<
         return this.models.length;
     }
 
-    async find(id: Id): Promise<Model_ | null> {
+    async find(id: Id): Promise<Model | null> {
         console.log("Find", id);
         await this.request();
 

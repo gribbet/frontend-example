@@ -6,7 +6,7 @@ import Selector from "wedges/lib/component/Selector";
 import Template from "wedges/lib/component/Template";
 
 import { application } from "..";
-import Model, { idSort, ModelSort } from "../model/Model";
+import Model_, { idSort, ModelSort } from "../model/Model";
 import ModelService from "../service/ModelService";
 import DataTable, { Column } from "./DataTable";
 import Pagination from "./Pagination";
@@ -32,15 +32,15 @@ export class PropertyColumn<T> implements Column<T> {
 
 export class SortablePropertyColumn<
     Id,
-    Model_ extends Model<Id>,
+    Model extends Model_<Id>,
     Sort extends ModelSort = ModelSort
-    > extends PropertyColumn<Model_> {
+    > extends PropertyColumn<Model> {
 
     constructor(
         displayName: string,
         sort: Sort,
-        getter: (model: Model_) => string,
-        private list: () => ModelList<Id, Model_, Sort>
+        getter: (model: Model) => string,
+        private list: () => ModelList<Id, Model, Sort>
     ) {
         super(displayName, getter);
         this.header = new Container([
@@ -94,22 +94,22 @@ class ButtonsColumn<T> implements Column<T> {
 
 export default class ModelList<
     Id,
-    Model_ extends Model<Id>,
+    Model extends Model_<Id>,
     Sort extends ModelSort = ModelSort
     > extends Container {
 
     constructor(
-        private service: ModelService<Id, Model_, Sort>,
-        onEdit: (model: Model_) => void,
-        columns: Column<Model_>[],
+        private service: ModelService<Id, Model, Sort>,
+        onEdit: (model: Model) => void,
+        columns: Column<Model>[],
     ) {
         super([
             new Template(require("../../templates/model-table.pug")),
             new Selector(".models",
-                new DataTable<Model_>(
+                new DataTable<Model>(
                     () => this.models || [],
                     columns.concat(
-                        new ButtonsColumn<Model_>(
+                        new ButtonsColumn<Model>(
                             model => onEdit(model),
                             async model => {
                                 if (model.id !== null)
@@ -132,7 +132,7 @@ export default class ModelList<
     public sort: Sort = <Sort>idSort;
     public reverse = false;
 
-    private models: Model_[] | null = null;
+    private models: Model[] | null = null;
     private count: number | null = null;
 
     async load() {
