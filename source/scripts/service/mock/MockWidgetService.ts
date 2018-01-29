@@ -1,5 +1,5 @@
-import Widget, { WidgetSort } from "../../model/Widget";
-import { WidgetId } from "../../model/Widget";
+import { idSort } from "../../model/Model";
+import Widget, { nameSort, WidgetId, WidgetSort } from "../../model/Widget";
 import MockModelService from "./MockModelService";
 
 export default class MockWidgetService
@@ -20,22 +20,19 @@ export default class MockWidgetService
         });
     }
 
-    newId(): WidgetId {
+    protected newId(): WidgetId {
         return <WidgetId>(Math.max(...this.models.map(_ => <number>_.id || 0), 0) + 1);
     }
 
-    comparator(sort: WidgetSort) {
-        if (sort === "name")
+    protected comparator(sort: WidgetSort) {
+        if (sort === nameSort)
             return (a: Widget, b: Widget) => a.name.localeCompare(b.name);
-        if (sort === "updated")
-            return (a: Widget, b: Widget) => a.updated.getTime() - b.updated.getTime();
-        return (a: Widget, b: Widget) => (<number>a.id || 0) - (<number>b.id || 0);
+        if (sort === idSort)
+            return (a: Widget, b: Widget) => (<number>a.id || 0) - (<number>b.id || 0);
+        return super.comparator(sort);
     }
 
     async save(widget: Widget) {
-        if (widget.id === null)
-            widget.created = new Date();
-        widget.updated = new Date();
         return await super.save(widget);
     }
 }

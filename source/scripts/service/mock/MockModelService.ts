@@ -1,20 +1,32 @@
 import { delay } from "../../common";
-import Model from "../../model/Model";
+import Model, { ModelSort, updatedSort } from "../../model/Model";
 import ModelService, { SortOptions } from "../ModelService";
 import { loadingIndicator } from "./../../loading-indicator";
 
-export default abstract class MockModelService<Id, Sort, Model_ extends Model<Id>>
-    implements ModelService<Id, Sort, Model_> {
+export default abstract class MockModelService<
+    Id,
+    Sort extends ModelSort,
+    Model_ extends Model<Id>>
+    implements ModelService<Id, ModelSort, Model_> {
 
     protected models: Model_[] = [];
 
-    abstract newId(): Id;
+    protected abstract newId(): Id;
 
-    abstract comparator(sort: Sort): (a: Model_, b: Model_) => number;
+    protected comparator(sort: Sort): (a: Model_, b: Model_) => number {
+        if (sort === updatedSort)
+            return (a: Model_, b: Model_) => a.updated.getTime() - b.updated.getTime();
+        return (a: Model_, b: Model_) =>
+            (a.id || "").toString().localeCompare((b.id || "").toString())
+    }
 
     async save(model: Model_): Promise<Model_> {
         console.log("Save");
         await this.request();
+
+        if (model.id === null)
+            model.created = new Date();
+        model.updated = new Date();
 
         model = Object.assign({}, model);
         if (model.id === null)

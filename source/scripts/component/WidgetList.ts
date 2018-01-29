@@ -6,7 +6,8 @@ import Selector from "wedges/lib/component/Selector";
 import Template from "wedges/lib/component/Template";
 
 import { application, widgetService } from "..";
-import Widget, { WidgetSort } from "./../model/Widget";
+import { idSort, ModelSort, updatedSort } from "../model/Model";
+import Widget, { nameSort, WidgetSort } from "../model/Widget";
 import DataTable, { Column } from "./DataTable";
 import Pagination from "./Pagination";
 
@@ -29,7 +30,7 @@ class PropertyColumn<T> implements Column<T> {
     ]);
 }
 
-class SortablePropertyColumn<T> extends PropertyColumn<T> {
+class SortablePropertyColumn<T, Sort_ extends ModelSort> extends PropertyColumn<T> {
 
     constructor(
         displayName: string,
@@ -104,19 +105,19 @@ export default class WidgetList extends Container {
             new Selector(".widgets",
                 new DataTable<Widget>(
                     () => this.widgets || [], [
-                        new SortablePropertyColumn<Widget>(
+                        new SortablePropertyColumn<Widget, WidgetSort>(
                             "ID",
-                            "id",
+                            idSort,
                             widget => (widget.id || 0).toString(),
                             () => this),
-                        new SortablePropertyColumn<Widget>(
+                        new SortablePropertyColumn<Widget, WidgetSort>(
                             "Name",
-                            "name",
+                            nameSort,
                             widget => widget.name,
                             () => this),
-                        new SortablePropertyColumn<Widget>(
+                        new SortablePropertyColumn<Widget, WidgetSort>(
                             "Updated",
-                            "updated",
+                            updatedSort,
                             widget => widget.updated.toLocaleTimeString(),
                             () => this),
                         new ButtonsColumn<Widget>(
@@ -139,7 +140,7 @@ export default class WidgetList extends Container {
     }
 
     public page = 0;
-    public sort: WidgetSort = "id";
+    public sort: WidgetSort = idSort;
     public reverse = false;
 
     private widgets: Widget[] | null = null;

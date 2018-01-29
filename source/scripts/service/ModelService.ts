@@ -1,13 +1,17 @@
-import Model from "../model/Model";
+import Model, { ModelSort } from "../model/Model";
 
-export interface SortOptions<Sort> {
+export interface SortOptions<Sort extends ModelSort> {
     offset?: number;
     count?: number;
     sort?: Sort;
     reverse?: boolean;
 }
 
-export default interface ModelService<Id, Sort, Model_ extends Model<Id>> {
+export default interface ModelService<
+    Id,
+    Sort extends ModelSort,
+    Model_ extends Model<Id>> {
+
     save(model: Model<Id>): Promise<Model_>;
     list(options: SortOptions<Sort>): Promise<Model_[]>
     count(): Promise<number>
