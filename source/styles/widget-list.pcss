@@ -9,4 +9,30 @@
         @mixin cell 3;
         text-align: right;
     }
+
+    & .models .model {
+
+        & .id {
+            @mixin cell 2;
+        }
+
+        & .updated {
+            @mixin cell 3;
+            white-space: nowrap;
+        }
+
+        & .name {
+            @mixin cell 3;
+        }
+
+        & .buttons {
+            @mixin cell 4;
+            text-align: right;
+            white-space: nowrap;
+
+            & button {
+                margin-bottom: -0.5rem;
+            }
+        }
+    }
 }

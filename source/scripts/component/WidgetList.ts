@@ -27,14 +27,14 @@ export default class WidgetList extends Container {
                     _ => (_.id || 0).toString(),
                     () => this.table),
                 new SortablePropertyColumn(
-                    "Name",
-                    nameSort,
-                    _ => _.name,
-                    () => this.table),
-                new SortablePropertyColumn(
                     "Updated",
                     updatedSort,
                     _ => _.updated.toLocaleTimeString(),
+                    () => this.table),
+                new SortablePropertyColumn(
+                    "Name",
+                    nameSort,
+                    _ => _.name,
                     () => this.table),
                 new ButtonsColumn(
                     widget => events.onEdit(widget),

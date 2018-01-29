@@ -12,11 +12,11 @@
             border-bottom: 1px solid #ddd;
             transition: color 200ms;
             align-items: end;
+            padding-bottom: 0.5rem;
 
             & .header {
                 @mixin control-text;
-                padding: 0.5rem 0;
-
+                
                 & button {
                     margin: -0.5rem -1rem;
 
@@ -37,25 +37,6 @@
                 &.reverse button:after {
                     transform: rotate(180deg);
                 }
-            }
-
-            & .id {
-                @mixin cell 2;
-            }
-
-            & .updated {
-                @mixin cell 3;
-                white-space: nowrap;
-            }
-
-            & .name {
-                @mixin cell 3;
-            }
-
-            & .buttons {
-                @mixin cell 4;
-                text-align: right;
-                white-space: nowrap;
             }
         }
     }
