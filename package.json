@@ -14,7 +14,6 @@
     "postcss-mixins": "^6.2.0",
     "pug": "^2.0.0-rc.4",
     "pug-html-loader": "^1.1.5",
-    "route-parser": "^0.0.5",
     "source-map-loader": "^0.2.3",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
@@ -28,6 +27,7 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
+    "route-parser": "^0.0.5",
     "wedges": "https://github.com/gribbet/wedges"
   }
 }
