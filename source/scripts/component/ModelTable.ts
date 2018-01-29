@@ -32,14 +32,15 @@ export class PropertyColumn<T> implements Column<T> {
 
 export class SortablePropertyColumn<
     Id,
-    Sort extends ModelSort,
-    Model_ extends Model<Id>> extends PropertyColumn<Model_> {
+    Model_ extends Model<Id>,
+    Sort extends ModelSort = ModelSort
+    > extends PropertyColumn<Model_> {
 
     constructor(
         displayName: string,
         sort: Sort,
         getter: (model: Model_) => string,
-        private list: () => ModelList<Id, Sort, Model_>
+        private list: () => ModelList<Id, Model_, Sort>
     ) {
         super(displayName, getter);
         this.header = new Container([
@@ -93,11 +94,12 @@ class ButtonsColumn<T> implements Column<T> {
 
 export default class ModelList<
     Id,
-    Sort extends ModelSort,
-    Model_ extends Model<Id>> extends Container {
+    Model_ extends Model<Id>,
+    Sort extends ModelSort = ModelSort
+    > extends Container {
 
     constructor(
-        private service: ModelService<Id, Sort, Model_>,
+        private service: ModelService<Id, Model_, Sort>,
         onEdit: (model: Model_) => void,
         columns: Column<Model_>[],
     ) {

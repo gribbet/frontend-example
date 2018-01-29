@@ -3,7 +3,7 @@ import Widget, { nameSort, WidgetId, WidgetSort } from "../../model/Widget";
 import MockModelService from "./MockModelService";
 
 export default class MockWidgetService
-    extends MockModelService<WidgetId, WidgetSort, Widget> {
+    extends MockModelService<WidgetId, Widget, WidgetSort> {
 
     constructor() {
         super();

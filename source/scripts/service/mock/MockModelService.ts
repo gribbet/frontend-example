@@ -1,13 +1,13 @@
 import { delay } from "../../common";
+import { loadingIndicator } from "../../loading-indicator";
 import Model, { ModelSort, updatedSort } from "../../model/Model";
 import ModelService, { SortOptions } from "../ModelService";
-import { loadingIndicator } from "./../../loading-indicator";
 
 export default abstract class MockModelService<
     Id,
-    Sort extends ModelSort,
-    Model_ extends Model<Id>>
-    implements ModelService<Id, ModelSort, Model_> {
+    Model_ extends Model<Id>,
+    Sort extends ModelSort = ModelSort>
+    implements ModelService<Id, Model_, Sort> {
 
     protected models: Model_[] = [];
 

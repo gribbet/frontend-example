@@ -19,17 +19,17 @@ export default class WidgetList extends Container {
         }) {
         const table =
             new ModelTable(widgetService, events.onEdit, [
-                new SortablePropertyColumn<WidgetId, WidgetSort, Widget>(
+                new SortablePropertyColumn<WidgetId, Widget, WidgetSort>(
                     "ID",
                     idSort,
                     _ => (_.id || 0).toString(),
                     () => this.table),
-                new SortablePropertyColumn<WidgetId, WidgetSort, Widget>(
+                new SortablePropertyColumn<WidgetId, Widget, WidgetSort>(
                     "Name",
                     nameSort,
                     _ => _.name,
                     () => this.table),
-                new SortablePropertyColumn<WidgetId, WidgetSort, Widget>(
+                new SortablePropertyColumn<WidgetId, Widget, WidgetSort>(
                     "Updated",
                     updatedSort,
                     _ => _.updated.toLocaleTimeString(),
@@ -44,7 +44,7 @@ export default class WidgetList extends Container {
         this.table = table;
     }
 
-    private table: ModelTable<WidgetId, WidgetSort, Widget>;
+    private table: ModelTable<WidgetId, Widget, WidgetSort>;
 
     reset() {
         this.table.reset();

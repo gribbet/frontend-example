@@ -9,8 +9,8 @@ export interface SortOptions<Sort extends ModelSort> {
 
 export default interface ModelService<
     Id,
-    Sort extends ModelSort,
-    Model_ extends Model<Id>> {
+    Model_ extends Model<Id>,
+    Sort extends ModelSort = ModelSort> {
 
     save(model: Model<Id>): Promise<Model_>;
     list(options: SortOptions<Sort>): Promise<Model_[]>
