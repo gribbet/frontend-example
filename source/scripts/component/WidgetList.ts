@@ -3,9 +3,10 @@ import Container from "wedges/lib/component/Container";
 import Selector from "wedges/lib/component/Selector";
 import Template from "wedges/lib/component/Template";
 
-import { widgetService } from "..";
+import { application, widgetService } from "..";
 import { idSort, updatedSort } from "../model/Model";
 import Widget, { nameSort, WidgetId, WidgetSort } from "../model/Widget";
+import ButtonsColumn from "./table/ButtonsColumn";
 import ModelTable from "./table/ModelTable";
 import { SortablePropertyColumn } from "./table/SortablePropertyColumn";
 
@@ -19,7 +20,7 @@ export default class WidgetList extends Container {
             onEdit: (model: Widget) => void
         }) {
         const table =
-            new ModelTable(widgetService, events.onEdit, [
+            new ModelTable(widgetService, [
                 new SortablePropertyColumn(
                     "ID",
                     idSort,
@@ -34,7 +35,14 @@ export default class WidgetList extends Container {
                     "Updated",
                     updatedSort,
                     _ => _.updated.toLocaleTimeString(),
-                    () => this.table)
+                    () => this.table),
+                new ButtonsColumn(
+                    widget => events.onEdit(widget),
+                    async widget => {
+                        if (widget.id !== null)
+                            await widgetService.delete(widget.id);
+                        await application.update(() => this.reset())
+                    })
             ]);
         super([
             new Template(require("../../templates/widget-list.pug")),

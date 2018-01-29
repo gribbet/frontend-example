@@ -5,7 +5,6 @@ import Template from "wedges/lib/component/Template";
 import { application } from "../..";
 import Model_, { idSort, ModelSort } from "../../model/Model";
 import ModelService from "../../service/ModelService";
-import ButtonsColumn from "./ButtonsColumn";
 import Column from "./Column";
 import DataTable from "./DataTable";
 import Pagination from "./Pagination";
@@ -22,7 +21,6 @@ export default class ModelTable<
 
     constructor(
         private service: ModelService<Id, Model, Sort>,
-        onEdit: (model: Model) => void,
         columns: Column<Model>[],
     ) {
         super([
@@ -30,14 +28,7 @@ export default class ModelTable<
             new Selector(".models",
                 new DataTable<Model>(
                     () => this.models || [],
-                    columns.concat(
-                        new ButtonsColumn<Model>(
-                            model => onEdit(model),
-                            async model => {
-                                if (model.id !== null)
-                                    await service.delete(model.id);
-                                await application.update(() => this.reset())
-                            })))),
+                    columns)),
             new Selector(".pagination",
                 new Pagination(
                     () => this.page,
