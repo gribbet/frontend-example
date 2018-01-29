@@ -11,7 +11,7 @@ import Pagination from "./Pagination";
 
 declare var require: (path: string) => string;
 
-const perPage = 5;
+const perPage = 10;
 
 export default class ModelTable<
     Id,
