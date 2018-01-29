@@ -137,7 +137,7 @@ export default class ModelList<
         this.count = this.count
             || await this.service.count();
         if (this.page * perPage >= this.count)
-            this.page = Math.floor((this.count - 1) / perPage);
+            this.page = Math.max(0, Math.floor((this.count - 1) / perPage));
         this.models = this.models
             || await this.service.list({
                 count: perPage,
