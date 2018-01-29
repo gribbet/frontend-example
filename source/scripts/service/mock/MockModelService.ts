@@ -1,15 +1,16 @@
 import { delay } from "../../common";
 import Model from "../../model/Model";
-import ModelService from "../ModelService";
+import ModelService, { SortOptions } from "../ModelService";
 import { loadingIndicator } from "./../../loading-indicator";
 
-export default abstract class MockModelService<Id, Model_
-    extends Model<Id>>
-    implements ModelService<Id, Model_> {
+export default abstract class MockModelService<Id, Sort, Model_ extends Model<Id>>
+    implements ModelService<Id, Sort, Model_> {
 
     protected models: Model_[] = [];
 
     abstract newId(): Id;
+
+    abstract comparator(sort: Sort): (a: Model_, b: Model_) => number;
 
     async save(model: Model_): Promise<Model_> {
         console.log("Save");
@@ -28,25 +29,20 @@ export default abstract class MockModelService<Id, Model_
         return model;
     }
 
-    async list(count?: number, offset?: number) {
+    async list(options: SortOptions<Sort>) {
         console.log("List");
         await this.request();
 
-        const start = offset || 0;
-        const end = count ? start + count : undefined;
+        const start = options.offset || 0;
+        const end = options.count ? start + options.count : undefined;
 
-        return this.models.slice(start, end);
-    }
+        const models = this.models.slice(0);
+        if (options.sort)
+            models.sort(this.comparator(options.sort));
+        if (options.reverse)
+            models.reverse();
 
-    async listIds(count?: number, offset?: number) {
-        console.log("ListIds");
-        await this.request();
-
-        const start = offset || 0;
-        const end = count ? start + count : undefined;
-
-        return this.models.slice(start, end)
-            .map(_ => _.id || this.newId());
+        return models.slice(start, end).sort()
     }
 
     async count() {

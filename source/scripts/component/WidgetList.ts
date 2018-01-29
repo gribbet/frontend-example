@@ -6,7 +6,7 @@ import Selector from "wedges/lib/component/Selector";
 import Template from "wedges/lib/component/Template";
 
 import { application, widgetService } from "..";
-import Widget from "./../model/Widget";
+import Widget, { WidgetSort } from "./../model/Widget";
 import DataTable, { Column } from "./DataTable";
 import Pagination from "./Pagination";
 
@@ -28,6 +28,44 @@ class PropertyColumn<T> implements Column<T> {
         new ClassToggler(this.displayName.toLowerCase(), () => true)
     ]);
 }
+
+class SortablePropertyColumn<T> extends PropertyColumn<T> {
+
+    constructor(
+        displayName: string,
+        sort: WidgetSort,
+        getter: (row: T) => string,
+        private list: () => WidgetList
+    ) {
+        super(displayName, getter);
+        this.header = new Container([
+            new ClassToggler("header"),
+            new ClassToggler(displayName.toLowerCase()),
+            new ClassToggler("active", () =>
+                list().sort === sort),
+            new ClassToggler("reverse", () =>
+                list().sort === sort && list().reverse),
+            new Template("<button></button>"),
+            new Selector("button",
+                new Container([
+                    new Label(() => displayName),
+                    new ClickHandler(() =>
+                        application.update(() => {
+                            const list = this.list();
+                            if (list.sort === sort)
+                                list.reverse = !list.reverse;
+                            if (list.sort !== sort)
+                                list.reverse = false;
+                            list.sort = sort;
+                            list.page = 0;
+                            list.reset();
+                        }))
+                ]))
+        ]);
+    }
+}
+
+
 
 class ButtonsColumn<T> implements Column<T> {
 
@@ -66,15 +104,21 @@ export default class WidgetList extends Container {
             new Selector(".widgets",
                 new DataTable<Widget>(
                     () => this.widgets || [], [
-                        new PropertyColumn<Widget>(
+                        new SortablePropertyColumn<Widget>(
                             "ID",
-                            widget => (widget.id || 0).toString()),
-                        new PropertyColumn<Widget>(
+                            "id",
+                            widget => (widget.id || 0).toString(),
+                            () => this),
+                        new SortablePropertyColumn<Widget>(
                             "Name",
-                            widget => widget.name),
-                        new PropertyColumn<Widget>(
+                            "name",
+                            widget => widget.name,
+                            () => this),
+                        new SortablePropertyColumn<Widget>(
                             "Updated",
-                            widget => widget.updated.toLocaleTimeString()),
+                            "updated",
+                            widget => widget.updated.toLocaleTimeString(),
+                            () => this),
                         new ButtonsColumn<Widget>(
                             widget => events.onEdit(widget),
                             async  widget => {
@@ -94,7 +138,10 @@ export default class WidgetList extends Container {
         ]);
     }
 
-    private page = 0;
+    public page = 0;
+    public sort: WidgetSort = "id";
+    public reverse = false;
+
     private widgets: Widget[] | null = null;
     private count: number | null = null;
 
@@ -104,7 +151,12 @@ export default class WidgetList extends Container {
         if (this.page * perPage >= this.count)
             this.page = Math.floor((this.count - 1) / perPage);
         this.widgets = this.widgets
-            || await widgetService.list(perPage, this.page * perPage);
+            || await widgetService.list({
+                count: perPage,
+                offset: this.page * perPage,
+                sort: this.sort,
+                reverse: this.reverse
+            });
         await super.load();
     }
 
