@@ -1,10 +1,6 @@
-import Component from "wedges/lib/Component";
 import KeyedRepeater from "wedges/lib/component/KeyedRepeater";
 
-export interface Column<T> {
-    header: Component,
-    cell: (row: T) => Component
-}
+import Column from "./Column";
 
 export default class DataTable<T> extends KeyedRepeater<T | null> {
     constructor(

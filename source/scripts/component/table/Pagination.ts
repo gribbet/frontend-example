@@ -8,7 +8,7 @@ import Remover from "wedges/lib/component/Remover";
 import Selector from "wedges/lib/component/Selector";
 import Template from "wedges/lib/component/Template";
 
-import { range } from "../common";
+import { range } from "../../common";
 
 declare var require: (path: string) => string;
 
@@ -26,7 +26,7 @@ export default class Pagination extends Container {
             current() - Math.floor(count / 2)));
         const end = () => Math.min(start() + count, total());
         super([
-            new Template(require("../../templates/pagination.pug")),
+            new Template(require("../../../templates/pagination.pug")),
             new Remover(() => total() <= 1),
             new Selector(".previous",
                 new Container([

@@ -6,7 +6,8 @@ import Template from "wedges/lib/component/Template";
 import { widgetService } from "..";
 import { idSort, updatedSort } from "../model/Model";
 import Widget, { nameSort, WidgetId, WidgetSort } from "../model/Widget";
-import ModelTable, { SortablePropertyColumn } from "./ModelTable";
+import ModelTable from "./table/ModelTable";
+import { SortablePropertyColumn } from "./table/SortablePropertyColumn";
 
 declare var require: (path: string) => string;
 
