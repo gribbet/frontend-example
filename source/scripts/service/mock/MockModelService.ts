@@ -54,7 +54,7 @@ export default abstract class MockModelService<
         if (options.reverse)
             models.reverse();
 
-        return models.slice(start, end).sort()
+        return models.slice(start, end);
     }
 
     async count() {

@@ -8,7 +8,7 @@ export default class MockWidgetService
     constructor() {
         super();
 
-        const names = new Array(10)
+        const names = new Array(100)
             .fill(0)
             .map((_, i) =>
                 Math.random().toString(36).substring(2, 15))
@@ -28,7 +28,7 @@ export default class MockWidgetService
         if (sort === nameSort)
             return (a: Widget, b: Widget) => a.name.localeCompare(b.name);
         if (sort === idSort)
-            return (a: Widget, b: Widget) => (<number>a.id || 0) - (<number>b.id || 0);
+            return (a: Widget, b: Widget) => <number>a.id - <number>b.id;
         return super.comparator(sort);
     }
 
