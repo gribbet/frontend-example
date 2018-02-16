@@ -36,7 +36,7 @@
     "build": "yarn clean && webpack -p --env.production",
     "start": "webpack-dev-server --history-api-fallback",
     "clean": "rm -rf build",
-    "test": "mocha --require ts-node/register 'test/**/*.ts'"
+    "test": "yarn build && mocha --require ts-node/register 'test/**/*.ts'"
   },
   "dependencies": {
     "route-parser": "^0.0.5",
